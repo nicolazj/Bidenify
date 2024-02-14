@@ -9,6 +9,7 @@ import type { Point } from "face-api.js";
 export default function Home() {
   let loaded = useRef(false);
   let [modelLoaded, setModelLoaded] = useState(false);
+  let [canDownload, setCanDownload] = useState(false);
   useEffect(() => {
     if (loaded.current) return;
     loaded.current = true;
@@ -31,6 +32,7 @@ export default function Home() {
 
     let files = e.target.files;
     if (files && files[0]) {
+      setCanDownload(false);
       const img = await faceapi.bufferToImage(files[0]);
       let canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
@@ -49,14 +51,24 @@ export default function Home() {
         draw(rightEye);
         draw(leftEye);
       });
+      setCanDownload(true);
     }
   };
 
+  let download = () => {
+    let canvas = document.getElementById("canvas") as HTMLCanvasElement;
+
+    let canvasUrl = canvas.toDataURL("image/jpeg", 0.5);
+    const createEl = document.createElement("a");
+    createEl.href = canvasUrl;
+    createEl.download = "download-this-canvas";
+    createEl.click();
+    createEl.remove();
+  };
   return (
     <main className="dark flex min-h-screen flex-col items-center justify-between p-8">
       <a href="https://twitter.com/JoeBiden/status/1756888470599967000">
-      <img src="/biden.png" alt="" className="p-2 bg-white rounded-lg" />
-        
+        <img src="/biden.png" alt="" className="p-2 bg-white rounded-lg" />
       </a>
 
       {modelLoaded ? (
@@ -72,14 +84,22 @@ export default function Home() {
             />
           </Label>
         </Button>
-      ): <Button className="m-8 text-[32px]">
-        Loading models...</Button>}
-     
+      ) : (
+        <Button className="m-8 text-[32px]">Loading models...</Button>
+      )}
+      <p className="opacity-70 m-8">
+        {"This app uses "}
+        <span className="line-through">[insert buzz words here] </span> &nbsp;
+        {
+          " AI for detecting face/eyes, and adds laser eyes for you, so you don't have to. "
+        }
+      </p>
       <canvas id="canvas" className="w-full"></canvas>
-
-      <p className="opacity-70 m-8">{"This app uses "}
-      <span className="line-through">[insert buzz words here] </span> &nbsp;
-      {" AI for detecting face/eyes, and adds laser eyes for you, so you don't have to. "}</p>
+      {canDownload && (
+        <Button className="m-8 text-[32px]" onClick={download}>
+          Download 💾
+        </Button>
+      )}
       <img src="eye.png" alt="" id="eye" className="invisible" />
     </main>
   );
