@@ -56,9 +56,9 @@ export default function Home() {
     <main className="dark flex min-h-screen flex-col items-center justify-between p-8">
       <img src="/biden.png" alt="" className="p-2 bg-white rounded-lg" />
 
-      {modelLoaded && (
-        <Button slot="label" asChild className="cursor-pointer m-8">
-          <Label htmlFor="picture" className="text-[32px]">
+      {modelLoaded ? (
+        <Button slot="label" asChild className="cursor-pointer m-8 text-[32px]">
+          <Label htmlFor="picture" className="">
             Bidenify me
             <Input
               id="picture"
@@ -69,7 +69,8 @@ export default function Home() {
             />
           </Label>
         </Button>
-      )}
+      ): <Button className="m-8 text-[32px]">
+        Loading models...</Button>}
       <p></p>
       <canvas id="canvas" className="w-full"></canvas>
       <img src="eye.png" alt="" id="eye" className="invisible" />
