@@ -71,8 +71,12 @@ export default function Home() {
         </Button>
       ): <Button className="m-8 text-[32px]">
         Loading models...</Button>}
-      <p className="opacity-70">{"This app uses TensorFlow for detecting face/eyes, and adds laser eyes for you, so you don't have to. "}</p>
+     
       <canvas id="canvas" className="w-full"></canvas>
+
+      <p className="opacity-70 m-8">{"This app uses "}
+      <span className="line-through">[insert buzz words here] </span> &nbsp;
+      {" AI for detecting face/eyes, and adds laser eyes for you, so you don't have to. "}</p>
       <img src="eye.png" alt="" id="eye" className="invisible" />
     </main>
   );
