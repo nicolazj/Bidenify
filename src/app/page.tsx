@@ -17,9 +17,11 @@ export default function Home() {
 
     async function init() {
       const faceapi = await import("face-api.js");
-      await faceapi.loadSsdMobilenetv1Model("/models");
-      await faceapi.loadFaceLandmarkModel("/models");
-      await faceapi.loadFaceRecognitionModel("/models");
+      await Promise.all([
+        faceapi.loadSsdMobilenetv1Model("/models"),
+        faceapi.loadFaceLandmarkModel("/models"),
+        // faceapi.loadFaceRecognitionModel("/models"),
+      ]);
       setModelLoaded(true);
     }
   }, []);
