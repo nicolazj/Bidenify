@@ -59,7 +59,7 @@ export default function Home() {
       {modelLoaded ? (
         <Button slot="label" asChild className="cursor-pointer m-8 text-[32px]">
           <Label htmlFor="picture" className="">
-            Bidenify me
+            Bidenify me 😍
             <Input
               id="picture"
               type="file"
@@ -71,7 +71,7 @@ export default function Home() {
         </Button>
       ): <Button className="m-8 text-[32px]">
         Loading models...</Button>}
-      <p></p>
+      <p className="opacity-70">{"This app uses TensorFlow for detecting face/eyes, and adds laser eyes for you, so you don't have to. "}</p>
       <canvas id="canvas" className="w-full"></canvas>
       <img src="eye.png" alt="" id="eye" className="invisible" />
     </main>
