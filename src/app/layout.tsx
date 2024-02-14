@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Bidenify me",
-  description: "Add lazer eyes to any pics",
+  description: "Add laser eyes to any pics",
 };
 
 export default function RootLayout({
