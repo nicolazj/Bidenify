@@ -54,7 +54,10 @@ export default function Home() {
 
   return (
     <main className="dark flex min-h-screen flex-col items-center justify-between p-8">
+      <a href="https://twitter.com/JoeBiden/status/1756888470599967000">
       <img src="/biden.png" alt="" className="p-2 bg-white rounded-lg" />
+        
+      </a>
 
       {modelLoaded ? (
         <Button slot="label" asChild className="cursor-pointer m-8 text-[32px]">
