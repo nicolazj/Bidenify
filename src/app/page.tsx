@@ -3,15 +3,16 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import type { Point } from "face-api.js";
 
 export default function Home() {
   let loaded = useRef(false);
+  let [modelLoaded, setModelLoaded] = useState(false);
   useEffect(() => {
     if (loaded.current) return;
     loaded.current = true;
-    console.log("init");
+
     init();
 
     async function init() {
@@ -19,6 +20,7 @@ export default function Home() {
       await faceapi.loadSsdMobilenetv1Model("/models");
       await faceapi.loadFaceLandmarkModel("/models");
       await faceapi.loadFaceRecognitionModel("/models");
+      setModelLoaded(true);
     }
   }, []);
 
@@ -42,7 +44,6 @@ export default function Home() {
         let rightEye = v.landmarks.getRightEye();
         let leftEye = v.landmarks.getLeftEye();
 
-        console.log({ rightEye, leftEye });
         draw(rightEye);
         draw(leftEye);
       });
@@ -53,18 +54,20 @@ export default function Home() {
     <main className="dark flex min-h-screen flex-col items-center justify-between p-8">
       <img src="/biden.png" alt="" className="p-2 bg-white rounded-lg" />
 
-      <Button slot="label" asChild className="cursor-pointer m-8">
-        <Label htmlFor="picture" className="text-[32px]">
-          Bidenify me
-          <Input
-            id="picture"
-            type="file"
-            accept="image/*"
-            className=" hidden "
-            onChange={onFileChange}
-          />
-        </Label>
-      </Button>
+      {modelLoaded && (
+        <Button slot="label" asChild className="cursor-pointer m-8">
+          <Label htmlFor="picture" className="text-[32px]">
+            Bidenify me
+            <Input
+              id="picture"
+              type="file"
+              accept="image/*"
+              className=" hidden "
+              onChange={onFileChange}
+            />
+          </Label>
+        </Button>
+      )}
       <p></p>
       <canvas id="canvas" className="w-full"></canvas>
       <img src="eye.png" alt="" id="eye" className="invisible" />
